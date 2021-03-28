@@ -34,15 +34,23 @@ def parser(html):
     return bs
 
 
-parser(scrap(inp_inn()))
+soup = parser(scrap(inp_inn()))
+legal_entity = {
+    'Статус': soup.find('td', class_='status_1').get_text(),
+    'Полное наименование': soup.find('a', class_='upper').get_text(),
+    'Краткое наименование': str(soup.h1.text).replace('Организация ', ''),
+    'ОГРН': soup.find('span', title='Основной государственный регистрационный номер').get_text()
+}
 
 
+reg_data = soup.find_all(class_='c2m')
+for i in reg_data:
+    print(i.text)
+# print(soup.find('a', class_='upper').get_text())
+# print(str(soup.h1.text).replace('Организация ', ''))
+# print(soup.find('span', title='Основной государственный регистрационный номер').next_sibling.get_text())
+# reg_data = soup.find('table', class_='tt').get_text()
+# print(soup.find('div', class_='c2m').get_text())
 
+# print(legal_entity)
 
-#
-#
-#
-#
-# print(elem2.text)
-# print(bs.find('div', class_='content').get_text())
-# print(bs.find('td', class_='wwbw').get_text())
